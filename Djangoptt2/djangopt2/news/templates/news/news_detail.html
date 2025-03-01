@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ news_item.title }}</title>
+</head>
+<body>
+    <h1>{{ news_item.title }}</h1>
+    <p>{{ news_item.content }}</p>
+    <p><strong>Опубликовано:</strong> {{ news_item.created_at }}</p>
+
+    <h2>Комментарии</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.content }} - <i>{{ comment.created_at }}</i></li>
+        {% empty %}
+            <p>Нет комментариев.</p>
+        {% endfor %}
+    </ul>
+
+    <h2>Добавить комментарий</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить комментарий</button>
+    </form>
+
+    <br>
+    <a href="{% url 'news_list' %}">Все новости</a>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Новости</title>
+</head>
+<body>
+    <h1>Все новости</h1>
+    <a href="{% url 'add_news' %}">Добавить новость</a>
+    <ul>
+        {% for news in news %}
+            <li>
+                <a href="{% url 'news_detail' news.id %}">{{ news.title }}</a> - {{ news.created_at }}
+            </li>
+        {% empty %}
+            <p>Нет новостей</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
