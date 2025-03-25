@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}News{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f8f8f8; }
+        h1, h2 { color: #333; }
+        a { text-decoration: none; color: #007BFF; }
+        a:hover { text-decoration: underline; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><a href="{% url 'news_list' %}">Новости</a></h1>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

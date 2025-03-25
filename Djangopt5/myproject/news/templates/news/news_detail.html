@@ -1,0 +1,58 @@
+{% extends 'news/base.html' %}
+
+{% block title %}{{ news_item.title }}{% endblock %}
+{% block content %}
+<h2>{{ news_item.title }}</h2>
+<p>{{ news_item.content }}</p>
+
+<h3>Комментарии:</h3>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.content }} — {{ comment.created_at }}</li>
+    {% endfor %}
+</ul>
+
+<h4>Добавить комментарий</h4>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
+{% endblock %}
+
+
+<h1>{{ news_item.title }}</h1>
+<p>{{ news_item.content }}</p>
+
+<h2>Комментарии</h2>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.content }} — {{ comment.created_at }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Добавить комментарий</h3>
+
+{% if user.is_authenticated %}
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
+{% else %}
+<p><strong>Доступно только для авторизованных пользователей.</strong></p>
+<p><a href="{% url 'login' %}?next={{ request.path }}">Войти</a> или <a href="{% url 'signup' %}">Зарегистрироваться</a></p>
+{% endif %}
+
+{% for comment in comments %}
+    <li>{{ comment.content }}
+        {% if comment.author == user or user.has_perm('news.delete_comment') %}
+            <form method="post" action="{% url 'delete_comment' comment.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Удалить</button>
+            </form>
+        {% endif %}
+    </li>
+{% endfor %}
+
+
