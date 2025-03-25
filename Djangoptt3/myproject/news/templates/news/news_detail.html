@@ -1,0 +1,16 @@
+<h1>{{ news_item.title }}</h1>
+<p>{{ news_item.content }}</p>
+
+<h2>Комментарии</h2>
+<ul>
+    {% for comment in comments %}
+        <li>{{ comment.content }} — {{ comment.created_at }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Добавить комментарий</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Отправить</button>
+</form>
